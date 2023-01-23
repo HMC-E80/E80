@@ -45,7 +45,7 @@ for i=1:numel(varTypes)
 end
 fclose(fid);
 
-%% Process you data here
+%% Process your data here
 
 
 
