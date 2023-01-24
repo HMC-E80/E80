@@ -5,15 +5,29 @@
 #define GPS_LOCK_LED 20
 #define USER_BUTTON 2
 
-// Motor A: pins 3,4
-#define MOTOR_L_FORWARD 3
-#define MOTOR_L_REVERSE 4
-// Motor B: pins 5,6
-#define MOTOR_R_FORWARD 5
-#define MOTOR_R_REVERSE 6
-// Motor C: pins 23,22
-#define MOTOR_V_FORWARD	23
-#define MOTOR_V_REVERSE	22
+// ************** For Version 3 of the Motherboard ***********
+// Motor A: pins 3,4 L
+#define MOTOR_A_DIRECTION 4 //IN1
+#define MOTOR_A_SPEED 3     //IN2
+// Motor B: pins 5,6 R
+#define MOTOR_B_DIRECTION 6 //IN1
+#define MOTOR_B_SPEED 5     //IN2
+// Motor C: pins 23,22 V
+#define MOTOR_C_DIRECTION 22 //IN1
+#define MOTOR_C_SPEED 23     //IN2
+// **********************************************************
+
+// ************ For Version 2.2 and earlier of the Motherboard
+// Motor A: pins 3,4 L
+#define MOTOR_A_FORWARD 3 //IN1
+#define MOTOR_A_REVERSE 4 //IN2
+// Motor B: pins 5,6 R
+#define MOTOR_B_FORWARD 5 //IN1
+#define MOTOR_B_REVERSE 6 //IN2
+// Motor C: pins 23,22 V
+#define MOTOR_C_FORWARD	23 //IN1
+#define MOTOR_C_REVERSE	22 //IN2
+// **********************************************************
 
 // Error Flags
 #define ERROR_FLAG_A 7

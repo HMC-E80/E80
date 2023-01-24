@@ -1,3 +1,8 @@
+// In summer 2021 the motherboard had to be updated with new H-bridges. The new H-bridges
+// needed to be driven by an H-bridge driver IN1 - Direction, IN2 - SPEED, rather than
+// the Half-bridge driver for the old ones, switch IN1 & IN2 for PWM and LOW to change
+// direction. The code below, along with the .h file and the Pinouts.h file were changed.
+// Erik Spjut August 2021.
 #include "MotorDriver.h"
 #include "Printer.h"
 extern Printer printer;
@@ -9,17 +14,15 @@ MotorDriver::MotorDriver()
     motorValues[m] = 0;
     pwmValues[m] = 0;
     pwmDir[m] = 0;
-    pinMode(motorPins[m][BACKWARD_PIN],OUTPUT);
-    pinMode(motorPins[m][FORWARD_PIN],OUTPUT);
+    digitalWrite(motorPins[m][DIRECTION_PIN], 0);
+    analogWrite(motorPins[m][SPEED_PIN], 0);
   }
 }
 
 void MotorDriver::init(void) {
   for (int m = 0; m < NUM_MOTORS; m++) {
-    analogWrite(motorPins[m][FORWARD_PIN], 1); // this line resets the error flag of motor drivers
-    delay(10); // oone of the motor driver input pins is pulled high long enough to reset the EF pin
-    analogWrite(motorPins[m][BACKWARD_PIN], 0);
-    analogWrite(motorPins[m][FORWARD_PIN], 0);
+    pinMode(motorPins[m][SPEED_PIN],OUTPUT);
+    pinMode(motorPins[m][DIRECTION_PIN],OUTPUT);
   }
 }
 
@@ -36,8 +39,8 @@ void MotorDriver::apply(void)
 
   // write this information to motors
   for (int m = 0; m < NUM_MOTORS; m++) { // using pwmDir as 0 or 1
-    analogWrite(motorPins[m][FORWARD_PIN], pwmDir[m]*pwmValues[m]);
-    analogWrite(motorPins[m][BACKWARD_PIN], (!pwmDir[m])*pwmValues[m]);
+    digitalWrite(motorPins[m][DIRECTION_PIN], pwmDir[m]);
+    analogWrite(motorPins[m][SPEED_PIN], pwmValues[m]);
   }
 }
 

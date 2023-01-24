@@ -6,8 +6,8 @@
 #define MOTOR_A_INDEX 0
 #define MOTOR_B_INDEX 1
 #define MOTOR_C_INDEX 2
-#define FORWARD_PIN 0
-#define BACKWARD_PIN 1
+#define DIRECTION_PIN 0
+#define SPEED_PIN 1
 
 // the minimum PWM amount that causes the motors to actually spin
 #define MOTOR_DEADZONE 34
@@ -45,9 +45,9 @@ public:
 
 private:
   // pins for the motors
-  int motorPins[NUM_MOTORS][2] = {{MOTOR_L_FORWARD,MOTOR_L_REVERSE},
-                                  {MOTOR_R_FORWARD,MOTOR_R_REVERSE},
-                                  {MOTOR_V_FORWARD,MOTOR_V_REVERSE}};
+  int motorPins[NUM_MOTORS][2] = {{MOTOR_A_DIRECTION,MOTOR_A_SPEED},
+                                  {MOTOR_B_DIRECTION,MOTOR_B_SPEED},
+                                  {MOTOR_C_DIRECTION,MOTOR_C_SPEED}};
 
   // pwm data
   unsigned int pwmValues[NUM_MOTORS]; // absolute value
