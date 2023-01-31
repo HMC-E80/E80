@@ -2,6 +2,8 @@ void setup() {
   // put your setup code here, to run once:
   Serial.begin(115200);
   delay(2000); // Wait to ensure computer monitor is ready
+
+  analogReadAveraging(0); // Turn off analog read averaging
 }
 
 #define ANALOG_PIN 14
