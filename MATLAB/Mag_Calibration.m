@@ -33,7 +33,7 @@ disp("Rotate Motherboard into as many orientations as possible");
 %% Initialize Serial Port
 % Modify first argument to match the Teensy port under Tools tab of Arduino IDE
 % same baudrate as Teensy
-s = serial('/dev/cu.usbmodem4014140','BaudRate',115200);
+s = serial('/dev/tty.usbmodem120885801','BaudRate',115200);
 set(s,'InputBufferSize',bytesPerSample*numSamples);
 
 %% Read Data from IMU
@@ -70,9 +70,9 @@ hold on
 scatter3(mx,my,mz,'b.');
 ah = gca;
 title('Raw Magnetometer Data');
-xlabel('X Magnetic Flux [Gauss]');
-ylabel('Y Magnetic Flux [Gauss]');
-zlabel('Z Magnetic Flux [Gauss]');
+xlabel('X Magnetic Flux [mGuass]');
+ylabel('Y Magnetic Flux [mGauss]');
+zlabel('Z Magnetic Flux [mGauss]');
 set(ah,'FontSize',12);
 set(ah,'TitleFontSizeMultiplier',1.2);
 set(ah,'LineWidth',1);
@@ -101,9 +101,9 @@ plot3([0,0],[0,0],[min_mz_cal,max_mz_cal],'r-','LineWidth',2);
 sh1 = scatter3(mx_cal,my_cal,mz_cal,'b.');
 ah = gca;
 title('Calibrated Magnetometer Data');
-xlabel('X Magnetic Flux [Gauss]');
-ylabel('Y Magnetic Flux [Gauss]');
-zlabel('Z Magnetic Flux [Gauss]');
+xlabel('X Magnetic Flux');
+ylabel('Y Magnetic Flux');
+zlabel('Z Magnetic Flux');
 set(ah,'FontSize',12);
 set(ah,'TitleFontSizeMultiplier',1.2);
 set(ah,'LineWidth',1);
