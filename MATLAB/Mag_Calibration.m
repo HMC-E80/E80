@@ -112,6 +112,7 @@ grid on
 
 %% Display Offset Vector and Soft Iron Compensation Matrix
 disp('Offet Vector:');
+disp('Make sure to multiply the Y component by -1 because the IMU doesnt use the RHR')
 disp(c);
 disp('Soft Iron Compensation Matrix:');
 disp(U);
