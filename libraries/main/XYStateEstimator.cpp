@@ -29,18 +29,15 @@ void XYStateEstimator::updateState(imu_state_t * imu_state_p, gps_state_t * gps_
     // You can access the current imu heading with imu_state_p->heading
     // Also note that math.h is already included so you have access to trig functions [rad]
 
-    ///////////////////////////////////////////////////////////////////////
-    // write code here
-    ///////////////////////////////////////////////////////////////////////
     // get x and y
     float cosOrigLat = cos(origin_lat*PI/180.0);
+    state.x = (gps_state_p->lon-origin_lon)*PI/180.0*RADIUS_OF_EARTH_M*cosOrigLat;
+    state.y = (gps_state_p->lat-origin_lat)*PI/180.0*RADIUS_OF_EARTH_M;
 
     // get yaw
     float heading_rad = imu_state_p->heading*PI/180.0; // convert to radians
-    ///////////////////////////////////////////////////////////////////////
-    // don't change code past this point
-    ///////////////////////////////////////////////////////////////////////
-    
+    float yaw_rad = -heading_rad + PI/2.0; // adjust from 0=North, CWW=(+) to 0=East, CCW=(+)
+    state.yaw = angleDiff(yaw_rad);
   }
   else{
     gpsAcquired = 0;
