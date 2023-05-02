@@ -1,2 +1,4 @@
 .DS_Store
 desktop.ini
+.quarto/
+web/_site
