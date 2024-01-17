@@ -26,7 +26,7 @@ We recommend that for this class you use [Git Desktop](https://desktop.github.co
 
 1. Download and install the latest version of Git Desktop [here](https://desktop.github.com).
 2. Navigate to the [E80 Github repository](https://github.com/HMC-E80/E80) and click `Code > Open with GitHub Desktop`. You will get a prompt to download the repo and Github Desktop will ask you where to save the files. Choose a location on your hard drive where you want to save the files. You should choose a location on your hard drive (e.g., NOT in a folder which is synchronized in the cloud like a Google Drive File Stream folder) to minimize the chances of having any data corrupted. 
-   - NOTE: If for some reason clicking `Open with GitHub Desktop` is not working properly, simply copy the URL for the repository (e.g., `git@github.com:HMC-E80/E80.git`) and then manually clone the repository in GitHub Desktop using `File > Clone Repository`. Enter the copied URL into the "Respository URL" field.
+   - NOTE: If for some reason clicking `Open with GitHub Desktop` is not working properly, simply copy the URL for the repository (e.g., `https://github.com/HMC-E80/E80`) and then manually clone the repository in GitHub Desktop using `File > Clone Repository`. Enter the copied URL into the "Respository URL" field.
 
 ![](./assets/img/Github%20Clone.png)
 
