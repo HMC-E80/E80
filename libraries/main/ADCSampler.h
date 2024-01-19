@@ -10,7 +10,7 @@
  * ADCSampler implements SD logging for the ADC channels
  */
 
-#define NUM_PINS 14
+#define NUM_PINS 9
 
 class ADCSampler : public DataSource
 {
@@ -31,7 +31,7 @@ public:
 
 private:
 
-  const int pinMap[NUM_PINS] =  {21,14,15,16,17,18,19,20,22,23,24,25,26,27};
+  const int pinMap[NUM_PINS] =  {21,14,15,16,17,24,25,26,27};
 
 };
 #endif

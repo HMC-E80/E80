@@ -28,6 +28,7 @@ Previous Contributors:
 #define UartSerial Serial1
 #define DELAY 0
 #include <GPSLockLED.h>
+#include <BurstADCSampler.h>
 
 /////////////////////////* Global Variables *////////////////////////
 
@@ -43,6 +44,7 @@ SensorIMU imu;
 Logger logger;
 Printer printer;
 GPSLockLED led;
+BurstADCSampler burst_adc;
 
 // loop start recorder
 int loopStartTime;
@@ -68,6 +70,8 @@ void setup() {
   logger.include(&ef);
   logger.include(&button_sampler);
   logger.init();
+  burst_adc.init();
+  
 
   printer.init();
   ef.init();
@@ -93,6 +97,7 @@ void setup() {
   state_estimator.lastExecutionTime = loopStartTime - LOOP_PERIOD + XY_STATE_ESTIMATOR_LOOP_OFFSET;
   surface_control.lastExecutionTime        = loopStartTime - LOOP_PERIOD + SURFACE_CONTROL_LOOP_OFFSET;
   logger.lastExecutionTime          = loopStartTime - LOOP_PERIOD + LOGGER_LOOP_OFFSET;
+  burst_adc.lastExecutionTime       = loopStartTime;
 }
 
 
@@ -127,6 +132,20 @@ void loop() {
     adc.lastExecutionTime = currentTime;
     adc.updateSample(); 
   }
+
+
+// Expiremental burst pin sampling
+// samples at around 7400Hz every 30 seconds
+// stops motors and waits 2 seconds before burst sample
+/*  if ( currentTime-burst_adc.lastExecutionTime > 30000 ) {
+    burst_adc.lastExecutionTime = currentTime;
+    motor_driver.drive(0,0,0);
+    delay(2000);
+    Serial.print("Sampling\n");
+    burst_adc.sample();
+    Serial.print("done\n");
+  }
+*/
 
   if ( currentTime-ef.lastExecutionTime > LOOP_PERIOD ) {
     ef.lastExecutionTime = currentTime;
