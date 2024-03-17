@@ -89,7 +89,7 @@ String DepthControl::printWaypointUpdate(void) {
     wayPointUpdate += "Current Waypoint: ";
     wayPointUpdate += String(currentWayPoint);
     wayPointUpdate += "; Distance from Waypoint: ";
-    wayPointUpdate += String(dist);
+    wayPointUpdate += String(depth_error);
     wayPointUpdate += "[m]";
   }
   return wayPointUpdate;
@@ -99,9 +99,9 @@ void DepthControl::updatePoint(float z) {
   if (currentWayPoint == totalWayPoints) return; // don't check if finished
 
   float z_des = wayPoints[currentWayPoint];
-  dist = abs(z_des-z);
+  depth_error = abs(z_des-z);
   
-  if ((dist < DEPTH_MARGIN && currentWayPoint < totalWayPoints) || delayed) {
+  if ((depth_error < DEPTH_MARGIN && currentWayPoint < totalWayPoints) || delayed) {
     String changingWPMessage = "";
     int cwpmTime = 20;
 
