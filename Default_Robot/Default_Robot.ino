@@ -1,8 +1,7 @@
 /********
 Default E80 Code
-Current Author:
+Authors:
     Wilson Ives (wives@g.hmc.edu) '20 (contributed in 2018)
-Previous Contributors:
     Christopher McElroy (cmcelroy@g.hmc.edu) '19 (contributed in 2017)  
     Josephine Wong (jowong@hmc.edu) '18 (contributed in 2016)
     Apoorva Sharma (asharma@hmc.edu) '17 (contributed in 2016)                    
@@ -95,7 +94,7 @@ void setup() {
   ef.lastExecutionTime              = loopStartTime - LOOP_PERIOD + ERROR_FLAG_LOOP_OFFSET;
   button_sampler.lastExecutionTime  = loopStartTime - LOOP_PERIOD + BUTTON_LOOP_OFFSET;
   state_estimator.lastExecutionTime = loopStartTime - LOOP_PERIOD + XY_STATE_ESTIMATOR_LOOP_OFFSET;
-  surface_control.lastExecutionTime        = loopStartTime - LOOP_PERIOD + SURFACE_CONTROL_LOOP_OFFSET;
+  surface_control.lastExecutionTime = loopStartTime - LOOP_PERIOD + SURFACE_CONTROL_LOOP_OFFSET;
   logger.lastExecutionTime          = loopStartTime - LOOP_PERIOD + LOGGER_LOOP_OFFSET;
   burst_adc.lastExecutionTime       = loopStartTime;
 }
@@ -133,20 +132,6 @@ void loop() {
     adc.updateSample(); 
   }
 
-
-// Expiremental burst pin sampling
-// samples at around 7400Hz every 30 seconds
-// stops motors and waits 2 seconds before burst sample
-/*  if ( currentTime-burst_adc.lastExecutionTime > 30000 ) {
-    burst_adc.lastExecutionTime = currentTime;
-    motor_driver.drive(0,0,0);
-    delay(2000);
-    Serial.print("Sampling\n");
-    burst_adc.sample();
-    Serial.print("done\n");
-  }
-*/
-
   if ( currentTime-ef.lastExecutionTime > LOOP_PERIOD ) {
     ef.lastExecutionTime = currentTime;
     attachInterrupt(digitalPinToInterrupt(ERROR_FLAG_A), EFA_Detected, LOW);
@@ -173,10 +158,7 @@ void loop() {
     imu.read();     // blocking I2C calls
   }
  
-  //if ( currentTime-gps.lastExecutionTime > LOOP_PERIOD ) {
-  //  gps.lastExecutionTime = currentTime;
-    gps.read(&GPS); // blocking UART calls
-  //}
+  gps.read(&GPS); // blocking UART calls, need to check for UART every cycle
 
   if ( currentTime-state_estimator.lastExecutionTime > LOOP_PERIOD ) {
     state_estimator.lastExecutionTime = currentTime;

@@ -34,7 +34,7 @@ public:
   // control fields
   float depth_des;   // desired depth
   float depth;       // current depth
-  float dist;        // distance to waypoint
+  float depth_error; // distance to waypoint
   float Kp=00.0;     // proportional control gain
   float uV;          // vertical motor effort
 

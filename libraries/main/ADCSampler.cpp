@@ -21,7 +21,7 @@ void ADCSampler::updateSample(void)
   // maps pins to variable names
   // A10-A13 are pins 34-37, A14 is pin 40, rest same as pinout picture
   // pins A12-A13 and A15-A20 are on surface mount pads underneath the Teensy
-  // pins A10-A14 are _NOT_ 5V tolerarant!  All the other pins are. 
+  // pins A10-A14 are _NOT_ 5V tolerant!  All the other pins are. 
   for (int i=0; i<NUM_PINS; i++){
     sample[i] = analogRead(pinMap[i]);
   }

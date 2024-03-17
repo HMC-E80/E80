@@ -1,8 +1,7 @@
 /********
-E80 Lab 7 - Extra Credit 2 - Code
-Current Author:
+E80 Lab 7 Dive Activity Code
+Authors:
     Omar Aleman (oaleman@g.hmc.edu) '21 (contributed 2019)
-Previous Contributors:
     Wilson Ives (wives@g.hmc.edu) '20 (contributed in 2018)
     Christopher McElroy (cmcelroy@g.hmc.edu) '19 (contributed in 2017)  
     Josephine Wong (jowong@hmc.edu) '18 (contributed in 2016)
@@ -19,13 +18,14 @@ Previous Contributors:
 #include <SensorGPS.h>
 #include <SensorIMU.h>
 #include <XYStateEstimator.h>
+#include <ZStateEstimator.h>
 #include <ADCSampler.h>
 #include <ErrorFlagSampler.h>
 #include <ButtonSampler.h> // A template of a data source library
 #include <MotorDriver.h>
 #include <Logger.h>
 #include <Printer.h>
-#include <SurfaceControl.h>
+#include <DepthControl.h>
 #define UartSerial Serial1
 #include <GPSLockLED.h>
 
@@ -33,7 +33,8 @@ Previous Contributors:
 
 MotorDriver motor_driver;
 XYStateEstimator xy_state_estimator;
-SurfaceControl surface_control;
+ZStateEstimator z_state_estimator;
+DepthControl depth_control;
 SensorGPS gps;
 Adafruit_GPS GPS(&UartSerial);
 ADCSampler adc;
@@ -56,7 +57,8 @@ void setup() {
   logger.include(&imu);
   logger.include(&gps);
   logger.include(&xy_state_estimator);
-  logger.include(&surface_control);
+  logger.include(&z_state_estimator);
+  logger.include(&depth_control);
   logger.include(&motor_driver);
   logger.include(&adc);
   logger.include(&ef);
@@ -72,13 +74,14 @@ void setup() {
   motor_driver.init();
   led.init();
 
-  int navigateDelay = 0; // how long robot will stay at surface waypoint before continuing (ms)
+  int diveDelay = 0; // how long robot will stay at depth waypoint before continuing (ms)
 
-  const int num_surface_waypoints = 0; // Set to 0 if only doing depth control
-  double surface_waypoints [] = { 0, 0 };   // listed as x0,y0,x1,y1, ... etc.
-  surface_control.init(num_surface_waypoints, surface_waypoints, navigateDelay);
+  const int num_depth_waypoints = 2;
+  double depth_waypoints [] = { 0.5, 1 };  // listed as z0,z1,... etc.
+  depth_control.init(num_depth_waypoints, depth_waypoints, diveDelay);
   
   xy_state_estimator.init(); 
+  z_state_estimator.init();
 
   printer.printMessage("Starting main loop",10);
   loopStartTime = millis();
@@ -88,7 +91,8 @@ void setup() {
   ef.lastExecutionTime                 = loopStartTime - LOOP_PERIOD + ERROR_FLAG_LOOP_OFFSET;
   button_sampler.lastExecutionTime     = loopStartTime - LOOP_PERIOD + BUTTON_LOOP_OFFSET;
   xy_state_estimator.lastExecutionTime = loopStartTime - LOOP_PERIOD + XY_STATE_ESTIMATOR_LOOP_OFFSET;
-  surface_control.lastExecutionTime    = loopStartTime - LOOP_PERIOD + SURFACE_CONTROL_LOOP_OFFSET;
+  z_state_estimator.lastExecutionTime  = loopStartTime - LOOP_PERIOD + Z_STATE_ESTIMATOR_LOOP_OFFSET;
+  depth_control.lastExecutionTime      = loopStartTime - LOOP_PERIOD + DEPTH_CONTROL_LOOP_OFFSET;
   logger.lastExecutionTime             = loopStartTime - LOOP_PERIOD + LOGGER_LOOP_OFFSET;
 
 }
@@ -107,28 +111,37 @@ void loop() {
     printer.printValue(2,logger.printState());
     printer.printValue(3,gps.printState());   
     printer.printValue(4,xy_state_estimator.printState());  
-    printer.printValue(5,surface_control.printWaypointUpdate());
-    printer.printValue(6,surface_control.printString());
-    printer.printValue(7,motor_driver.printState());
-    printer.printValue(8,imu.printRollPitchHeading());        
-    printer.printValue(9,imu.printAccels());
+    printer.printValue(5,z_state_estimator.printState());  
+    printer.printValue(6,depth_control.printWaypointUpdate());
+    printer.printValue(7,depth_control.printString());
+    printer.printValue(8,motor_driver.printState());
+    printer.printValue(9,imu.printRollPitchHeading());        
+    printer.printValue(10,imu.printAccels());
     printer.printToSerial();  // To stop printing, just comment this line out
   }
 
-  /// SURFACE CONTROL FINITE STATE MACHINE///
-  if ( currentTime-surface_control.lastExecutionTime > LOOP_PERIOD ) {
-    surface_control.lastExecutionTime = currentTime;
-    if ( surface_control.navigateState ) { // NAVIGATE STATE //
-      if ( !surface_control.atPoint ) { 
-        surface_control.navigate(&xy_state_estimator.state, &gps.state, currentTime);
-      }
-      else if ( surface_control.complete ) { 
-        delete[] surface_control.wayPoints; // destroy surface waypoint array from the Heap
+  /* ROBOT CONTROL Finite State Machine */
+  if ( currentTime-depth_control.lastExecutionTime > LOOP_PERIOD ) {
+    depth_control.lastExecutionTime = currentTime;
+    if ( depth_control.diveState ) {      // DIVE STATE //
+      depth_control.complete = false;
+      if ( !depth_control.atDepth ) {
+        depth_control.dive(&z_state_estimator.state, currentTime);
       }
       else {
-        surface_control.atPoint = false;   // get ready to go to the next point
+        depth_control.diveState = false; 
+        depth_control.surfaceState = true;
       }
-      motor_driver.drive(surface_control.uL,surface_control.uR,0);
+      motor_driver.drive(0,0,depth_control.uV);
+    }
+    if ( depth_control.surfaceState ) {     // SURFACE STATE //
+      if ( !depth_control.atSurface ) { 
+        depth_control.surface(&z_state_estimator.state);
+      }
+      else if ( depth_control.complete ) { 
+        delete[] depth_control.wayPoints;   // destroy depth waypoint array from the Heap
+      }
+      motor_driver.drive(0,0,depth_control.uV);
     }
   }
   
@@ -152,7 +165,6 @@ void loop() {
     EF_States[2] = 1;
   }
 
-  // uses the ButtonSampler library to read a button -- use this as a template for new libraries!
   if ( currentTime-button_sampler.lastExecutionTime > LOOP_PERIOD ) {
     button_sampler.lastExecutionTime = currentTime;
     button_sampler.updateState();
@@ -168,6 +180,11 @@ void loop() {
   if ( currentTime-xy_state_estimator.lastExecutionTime > LOOP_PERIOD ) {
     xy_state_estimator.lastExecutionTime = currentTime;
     xy_state_estimator.updateState(&imu.state, &gps.state);
+  }
+
+  if ( currentTime-z_state_estimator.lastExecutionTime > LOOP_PERIOD ) {
+    z_state_estimator.lastExecutionTime = currentTime;
+    z_state_estimator.updateState(analogRead(PRESSURE_PIN));
   }
   
   if ( currentTime-led.lastExecutionTime > LOOP_PERIOD ) {

@@ -31,6 +31,7 @@ public:
   // control fields
   float yaw_des;         // desired yaw
   float yaw;             // current yaw
+  float yaw_error;       // difference between current and desired yaw
   float dist;            // distance to waypoint
   float u;               // control effort
   float Kp=10.0;         // proportional control gain
