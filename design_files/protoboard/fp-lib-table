@@ -1,0 +1,5 @@
+(fp_lib_table
+  (lib (name MTB_V2)(type KiCad)(uri /Users/Wilson/Documents/KiCad/MTB_V2/MTB_V2_Footprints.pretty)(options "")(descr "MTB V2 Footprints"))
+  (lib (name PTB_V2)(type KiCad)(uri ${KIPRJMOD}/PTB_V2_Footprints.pretty)(options "")(descr "PTB V2 Footprints"))
+  (lib (name MTB)(type KiCad)(uri /Users/Wilson/Documents/KiCad/MTB/MTB_footprints.pretty)(options "")(descr "MTB Footprints"))
+)
