@@ -7,7 +7,7 @@
 #include <SD.h>
 #include <stdio.h>
 
-#define NUM_PINS 9
+#define NUM_BURST_PINS 9
 
 // should be no more than 1000 samples
 // which samples for around .1 seconds
@@ -29,7 +29,7 @@ public:
 	int lastExecutionTime = -1;
 
 private:
-	node* headarray[NUM_PINS] = {NULL};
+	node* headarray[NUM_BURST_PINS+1] = {NULL};
 
 	//helper func
 	void update(void);
@@ -41,7 +41,7 @@ private:
 	String basename = "datalog";
 	String filename = "";
 	const int TIME_INDEX = 0;
-	const int pinMap[NUM_PINS] =  {21,14,15,16,17,24,25,26,27};
+	const int pinMap[NUM_BURST_PINS] =  {21,14,15,16,17,24,25,26,27};
 
 
 };

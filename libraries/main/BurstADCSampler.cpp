@@ -27,7 +27,7 @@ void BurstADCSampler::sample(){
 
 // delete all dynamically allocated memory
 void BurstADCSampler::cleanup(){
-	for ( int i = 0; i < NUM_PINS; i++){
+	for ( int i = 0; i < NUM_BURST_PINS+1; i++){
 		node* curr = headarray[i];
 		while(curr != nullptr){
 			node* next = curr->next;
@@ -35,7 +35,7 @@ void BurstADCSampler::cleanup(){
 			curr = next;
 		}
 	}
-	for (int i = 0; i < NUM_PINS; i++) {
+	for (int i = 0; i < NUM_BURST_PINS+1; i++) {
         headarray[i] = NULL;
     }
 }
@@ -44,9 +44,9 @@ void BurstADCSampler::cleanup(){
 // create new node, read data from pin, add to the list
 void BurstADCSampler::update(){
 	timestamp();
-	for ( int i = 1; i < NUM_PINS; i++){
+	for ( int i = 1; i < NUM_BURST_PINS+1; i++){
 		node* curr = new node;
-		curr->data = analogRead(pinMap[i]);
+		curr->data = analogRead(pinMap[i-1]);
 		curr->next = headarray[i];
 		headarray[i] = curr;
 	}
@@ -65,7 +65,7 @@ void BurstADCSampler::timestamp(){
 void BurstADCSampler::save(){
 	File dataFile = SD.open(filename.c_str(), FILE_WRITE);
 	if (dataFile) {
-		for ( int i = 0; i < NUM_PINS; i++){
+		for ( int i = 0; i < NUM_BURST_PINS+1; i++){
 			node* curr = headarray[i];
 			while(curr != nullptr){
 				dataFile.print(curr->data);
@@ -95,7 +95,7 @@ void BurstADCSampler::namefile(){
 // for debugging
 // dump each list into serial
 void BurstADCSampler::print(){
-	for ( int i = 0; i < NUM_PINS; i++){
+	for ( int i = 0; i < NUM_BURST_PINS+1; i++){
 		node* curr = headarray[i];
 		while(curr != nullptr){
 			Serial.print(curr->data);
