@@ -7,3 +7,12 @@
 [submodule "libraries/SD"]
 	path = libraries/SD
 	url = https://github.com/arduino-libraries/SD
+[submodule "E80_Design_Files"]
+	path = E80_Design_Files
+	url = git@github.com:HMC-E80/E80_Design_Files.git
+[submodule "E80_Scripts"]
+	path = E80_Scripts
+	url = git@github.com:HMC-E80/E80_Scripts.git
+[submodule "E80_Sketchbook"]
+	path = E80_Sketchbook
+	url = git@github.com:HMC-E80/E80_Sketchbook.git
