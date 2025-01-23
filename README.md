@@ -10,13 +10,9 @@ This respository also includes a [folder](./libraries/) of all the libraries you
 The [MATLAB](./MATLAB/) folder contains the various MATLAB `.m` files which are used throughout the labs.
 
 # How to Use this Repository
-## Arduino IDE Setup
-Follow the instructions below to download and use this code within the Arduino IDE.
-1. If you have not yet installed the Arduino IDE, install it from [here](https://www.arduino.cc/en/software). The most version as of this writing is 2.0.3 but higher version numbers should also work fine.
-2. Follow the instructions [here](https://www.pjrc.com/arduino-ide-2-0-0-teensy-support/) to configure support for the Teensy board within the Arduino IDE.
 
 ## Git Setup
-Next you need to configure Git on your machine.
+You will need to configure Git on your machine.
 Git is a distributed version control system.
 This means you can download a local clone of a collection of source code files and easily track the changes that you make to your code.
 While we won't be using all the features of git in E80, we will introduce you to the main features that will enable you to interact with the code base for your robot.
@@ -29,10 +25,17 @@ We recommend that for this class you use [Git Desktop](https://desktop.github.co
    - NOTE: If for some reason clicking `Open with GitHub Desktop` is not working properly, simply copy the URL for the repository (e.g., `https://github.com/HMC-E80/E80`) and then manually clone the repository in GitHub Desktop using `File > Clone Repository`. Enter the copied URL into the "Respository URL" field.
 
 ![](./assets/img/Github%20Clone.png)
+## Arduino IDE Setup
+Follow the instructions below to download and use this code within the Arduino IDE.
+1. If you have not yet installed the Arduino IDE, install it from [here](https://www.arduino.cc/en/software). The most version as of this writing is 2.0.3 but higher version numbers should also work fine.
+2. Follow the instructions [here](https://www.pjrc.com/arduino-ide-2-0-0-teensy-support/) to configure support for the Teensy board within the Arduino IDE.
+3. After downloading the code, open the Arduino IDE and go to __Arduino IDE > Settings__ if you are using a MAC and __file > preferences__ if you are using Windows. Change the Sketchbook location to point to the folder you downloaded from Github.
 
-1. After downloading the code, open the Arduino IDE and open the Settings. Change the Sketchbook location to point to the folder you just downloaded. Restart the Arduino IDE. Now you if you click on the Sketchbook icon in the toolbar on the left side of the Arduino IDE you should see all the code for your E80 motherboard listed and available. Open up the `E80_Lab_01.ino` sketch and Verify it to check that it compiles and all the libraries are properly downloaded.
 
 ![](./assets/img/Arduino%20IDE%20Sketchbook%20Setup.png)
+
+4. Now you if you click on the Sketchbook icon in the toolbar on the left side of the Arduino IDE you should see all the code for your E80 motherboard listed and available. Open up the `E80_Lab_01.ino` sketch and Verify it to check that it compiles and all the libraries are properly downloaded.
+
 ![](./assets/img/Arduino%20IDE%20Sketchbook%20Listing.png)
 
 Congratulations, you are now set up and have the default E80 source code downloaded!
