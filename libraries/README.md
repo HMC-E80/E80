@@ -1,12 +1,20 @@
-# Libraries
-## Custom E80 Libraries
-This repository includes the library files for E80.
+# E80 Libraries
 
-Custom E80 library files are included in the [main folder](./main/).
+This directory contains Arduino libraries required for the E80 robot platform.
 
-## External Libraries
-External libraries for the GPS module, IMU, and SD card interface are included as submodules.
-The original repositories can be found here:
-- https://github.com/adafruit/Adafruit_GPS
-- https://github.com/stm32duino/LSM303AGR
-- https://github.com/arduino-libraries/SD
+## Contents
+
+- **Adafruit_GPS/** - Library for interfacing with the GPS module
+- **LSM303AGR/** - Library for the LSM303AGR accelerometer and magnetometer
+- **SD/** - Library for interfacing with the SD card for data logging
+- **main/** - Core E80 libraries for the robot platform
+  - Sensor interfaces, motor drivers, data logging, and control systems
+  - State estimation and navigation algorithms
+
+## Installation
+
+No manual installation is needed if you set up your Arduino IDE sketchbook location as described in the main README. The Arduino IDE will automatically find and use these libraries.
+
+## Documentation
+
+Please refer to the header files (.h) in each library for API documentation and usage examples.
