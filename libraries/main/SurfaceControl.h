@@ -55,7 +55,7 @@ private:
 
   int getWayPoint(int dim);
 
-  const int stateDims = 2;
+  const int stateDims = 2;  // Number of dimensions in the state vector (x,y)
   int currentWayPoint = 0;
   bool gpsAcquired;
   
