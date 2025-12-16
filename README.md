@@ -21,15 +21,15 @@ First, you need to install Git on your computer.
 We recommend that for this class you use [Git Desktop](https://desktop.github.com) which provides a convenient GUI interface for interacting with the code.
 
 1. Download and install the latest version of Git Desktop [here](https://desktop.github.com).
-2. Navigate to the [E80 Github repository](https://github.com/HMC-E80/E80) and click `Code > Open with GitHub Desktop`. You will get a prompt to download the repo and Github Desktop will ask you where to save the files. Choose a location on your hard drive where you want to save the files. You should choose a location on your hard drive (e.g., NOT in a folder which is synchronized in the cloud like a Google Drive File Stream folder) to minimize the chances of having any data corrupted. 
+2. Navigate to the [E80 GitHub repository](https://github.com/HMC-E80/E80) and click `Code > Open with GitHub Desktop`. You will get a prompt to clone/download the repo, and GitHub Desktop will ask you where to save the files. Choose a location on your hard drive where you want to save the files (i.e., NOT in a folder that is synchronized in the cloud like a Google Drive File Stream folder). You should choose a location on your hard drive to minimize the chances of having any data corrupted.
    - NOTE: If for some reason clicking `Open with GitHub Desktop` is not working properly, simply copy the URL for the repository (e.g., `https://github.com/HMC-E80/E80`) and then manually clone the repository in GitHub Desktop using `File > Clone Repository`. Enter the copied URL into the "Respository URL" field.
 
 ![](./assets/img/Github%20Clone.png)
 ## Arduino IDE Setup
 Follow the instructions below to download and use this code within the Arduino IDE.
-1. If you have not yet installed the Arduino IDE, install it from [here](https://www.arduino.cc/en/software). The most version as of this writing is 2.0.3 but higher version numbers should also work fine.
+1. If you have not yet installed the Arduino IDE, install it from [here](https://www.arduino.cc/en/software). The version as of this writing is 2.0.3 but higher version numbers should also work fine.
 2. Follow the instructions [here](https://www.pjrc.com/arduino-ide-2-0-0-teensy-support/) to configure support for the Teensy board within the Arduino IDE.
-3. After downloading the code, open the Arduino IDE and go to __Arduino IDE > Settings__ if you are using a MAC and __file > preferences__ if you are using Windows. Change the Sketchbook location to point to the folder you downloaded from Github.
+3. After downloading the code, open the Arduino IDE and go to __Arduino IDE > Settings__ if you are using a MAC and __file > preferences__ if you are using Windows. Change the Sketchbook location to point to the folder you downloaded from GitHub.
 
 
 ![](./assets/img/Arduino%20IDE%20Sketchbook%20Setup.png)
